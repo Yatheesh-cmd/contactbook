@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+const baseURL = 'https://backendb-629j.onrender.com/api/contacts';
+
 function ContactForm({ fetchContacts, editContact, setEditContact }) {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [errors, setErrors] = useState({});
@@ -36,11 +38,11 @@ function ContactForm({ fetchContacts, editContact, setEditContact }) {
 
     try {
       if (editContact) {
-        const response = await axios.put(`http://localhost:5000/api/contacts/${editContact._id}`, formData);
+        const response = await axios.put(`${baseURL}/${editContact._id}`, formData);
         toast.success(response.data.message);
         setEditContact(null);
       } else {
-        const response = await axios.post('http://localhost:5000/api/contacts', formData);
+        const response = await axios.post(`${baseURL}`, formData);
         toast.success(response.data.message);
       }
       setFormData({ name: '', email: '', phone: '' });

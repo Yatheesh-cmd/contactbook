@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
+const baseURL = 'https://backendb-629j.onrender.com/api/contacts';
+
 function ContactList({ contacts, fetchContacts, setEditContact }) {
   const handleDeleteContact = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/contacts/${id}`);
+      const response = await axios.delete(`${baseURL}/${id}`);
       toast.success(response.data.message);
       fetchContacts();
     } catch (err) {
-      toast.error('Error deleting contact');
+      toast.error(err.response?.data?.error || 'Error deleting contact');
     }
   };
 
